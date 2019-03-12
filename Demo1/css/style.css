@@ -1,0 +1,26 @@
+.bg-blue{
+  background-color: blue;
+  color:white;
+  min-height: 50px;
+}
+.bg-red{
+  background-color: red;
+  color:white;
+  min-height: 50px;
+}
+.bg-green{
+  background-color: green;
+  color:white;
+  min-height: 50px;
+}
+.bg-yellow{
+  background-color: yellow;
+  color:black;
+  min-height: 50px;
+}
+
+.table-hover tr:hover{
+  background-color: lightskyblue !important;
+  color:#000 !important;
+  cursor: pointer;
+}
