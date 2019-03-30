@@ -1,0 +1,150 @@
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
+<link type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.min.css" />
+
+<div id="myOverlay"></div>
+<div id="loadingGIF">
+  <h2>Loading all PNP List Data...</h2>
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="ZipViewTable">
+  <thead>
+    <th>Last Name</th>
+    <th>First Name</th>
+    <th>Email</th>
+    <th>Department</th>
+  </thead>
+  <tfoot>
+    <th>Last Name</th>
+    <th>First Name</th>
+    <th>Email</th>
+    <th>Department</th>
+  </tfoot>
+</table>
+
+
+<style type="text/css">
+  #ZipViewTable {
+    display: none;
+  }
+
+  #myOverlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: black;
+    opacity: .7;
+    z-index: 2;
+    display: none;
+  }
+
+  #loadingGIF {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    z-index: 3;
+    display: none;
+  }
+
+  .container {
+    padding: 0 50px;
+  }
+
+  #searchButton {
+    padding: 5px;
+    display: block;
+    margin-left: 200px;
+    margin-top: 10px;
+  }
+
+  label {
+    width: 180px;
+    clear: left;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  input,
+  label {
+    float: left;
+  }
+
+  .innerContainer {
+    margin: 5px;
+  }
+
+  #ZipViewTable span {
+    display: none;
+  }
+
+  .innerContainerSide {
+    float: left;
+    padding-left: 10px;
+  }
+
+  .LibrarySelection {
+    padding: 10px, 0px;
+    margin: 5px;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#myOverlay').show();
+    $('#loadingGIF').show();
+    getEmployee();
+  });
+
+
+  function getEmployee() {
+    var customUrl = "/_api/Web/Lists/GetByTitle('Employees')/items?$top=5000";
+    var call = $.ajax({
+      url: _spPageContextInfo.webAbsoluteUrl + customUrl,
+      type: "GET",
+      dataType: "json",
+      headers: {
+        Accept: "application/json;odata=verbose"
+      }
+    });
+    call.done(function (data, textStatus, jqXHR) {
+      $("#ZipViewTable").dataTable({
+        "bDestroy": true,
+        "bProcessing": true,
+        "aaData": data.d.results,
+        //MAKE SURE YOU SPECIFY THE FIELDS YOU WANT TO DISPLAY IN THE LIST VIEW
+        //THE VALUE OF EACH "mData" PROPERTY IS THE FIELD NAME AS IT IS RETURNED
+        //FROM THE REST QUERY.  
+        "aoColumns": [
+          //    { "mData": "FileRef",
+          //        "mRender": function ( data, type, full ) {
+          //            var filename = data.replace(/^.*[\\\/]/, '');
+          //            return '<a href="'+data +'" target="_blank">' + filename + '</a>';
+          //        } },                            
+          //   { "mData": "MSDSDate",
+          //        "render": function (data) {
+          //        var d = new Date(data);                                   
+          //        return '<span>' + Date.parse(d) +'</span>' + d.toLocaleDateString();}                                     
+          //   },                    
+          { "mData": "Title" },
+          { "mData": "Department" },
+          { "mData": "Email" },
+          { "mData": "Phone" }
+        ],
+        "iDisplayLength": 20,
+        "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+        "bLengthChange": false,
+        "bProcessing": true,
+      });
+
+      $("#ZipViewTable").show();
+      $('#myOverlay').hide();
+      $('#loadingGIF').hide();
+    });
+    call.fail(function (jqXHR, textStatus, errorThrown) {
+      alert("Error retrieving Data: " + jqXHR.responseText);
+      $('#myOverlay').hide();
+      $('#loadingGIF').hide();
+    });
+  }
+</script>
