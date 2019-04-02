@@ -10,9 +10,9 @@ function submitClicked() {
 
   document.getElementById('results').innerHTML = JSON.stringify(contact);
 }
-
+$('#results').hide();
 function submitClicked2() {
-  var contact = {};
+  var contact = {};  
   contact.Email = $("#inputEmail4").val();
   contact.Password = $("#inputPassword4").val();
   contact.Address = $("#inputAddress").val();
@@ -25,7 +25,9 @@ function submitClicked2() {
   $("form").hide();
 }
 $("#submitButton").click(function () {
-  alert("You clicked me");
+  // alert("You clicked me");
+  $('#results').show();
+  submitClicked2()
 });
 // $("#inputEmail4").change(function(){
 //   if($(this).val().indexOf('@')==-1){

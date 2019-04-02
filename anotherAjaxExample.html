@@ -1,0 +1,97 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+  div#myContainer {
+    margin-top: 30px;
+  }
+</style>
+
+<div class="container-fluid" id="myContainer">
+
+</div>
+<script>
+  $(document).ready(function () {
+    getItems('Employees');
+  });
+
+  var next;
+  var previous;
+  function getItems(listName) {
+    var customUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/Web/Lists/GetByTitle('" + listName + "')/items?$top=10";
+    
+    if(next){
+      customUrl = next;      
+    }else{
+      previous = customUrl;
+    }
+    
+    var call = $.ajax({
+      url: customUrl,
+      type: "GET",
+      dataType: "json",
+      headers: {
+        Accept: "application/json;odata=verbose"
+      }
+    });
+    call.done(function (response) {
+      // TODO: implement something
+      // if(next){
+      //   previous = next;
+      // }
+      next = response.d.__next;
+      
+      var items = response.d.results;
+      var myhtml = '';
+      for (var i = 0; i < items.length; i += 2) {
+        myhtml += `
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">(${items[i].ID}) ${items[i].Title}</div>
+              <div class="panel-body">
+                <h4>Email: ${items[i].email}</h4>
+                <h4>Gender: ${items[i].department}</h4>
+              </div>
+              <div class="panel-footer">Some Footer</div>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">(${items[i + 1].ID}) ${items[i + 1].Title}</div>
+              <div class="panel-body">
+                <h4>Email: ${items[i + 1].email}</h4>
+                <h4>Gender: ${items[i + 1].department}</h4>
+              </div>
+              <div class="panel-footer">Some Footer</div>
+            </div>
+          </div>
+        </div>
+        `;
+      }
+      myhtml += `
+        <ul class="pager">
+          <li id="prev"><a href="#">Previous</a></li>
+          <li id="next"><a href="#">Next</a></li>
+        </ul>
+        `;
+      $("#myContainer").html(myhtml);
+      $("#prev").click(function () {
+        console.log("You clicked Previous");
+        next=previous;
+        getItems('PnpList');
+      });
+      $("#next").click(function () {
+        console.log("You clicked Next");
+        getItems('PnpList');
+      });
+      
+    });
+    call.fail(function (response) {
+      console.log(response);      
+    });
+  }
+
+</script>
