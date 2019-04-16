@@ -15,7 +15,7 @@
 
 
   function getItems(listName) {
-    var customUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/Web/Lists/GetByTitle('" + listName + "')/items?$top=10";
+    var customUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/Web/Lists/GetByTitle('" + listName + "')/items?$filter=Hide eq false";
     var call = $.ajax({
       url: customUrl,
       type: "GET",
