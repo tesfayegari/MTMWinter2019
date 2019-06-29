@@ -1,0 +1,28 @@
+<students studentType="SharePoint">
+  <student>
+    <fullName>Fana Goitom</fullName>
+    <department>IT</department>
+    <phone>444-444-4444</phone>
+    <studentId>ST11111</studentId>
+  </student>
+  <student>
+    <fullName>Fana1 Goitom</fullName>
+    <department>IT</department>
+    <phone>444-444-4444</phone>
+    <studentId>ST11112</studentId>
+  </student>
+</students>
+<students studentType="Database">
+  <student>
+    <fullName>Fana Goitom</fullName>
+    <department>IT</department>
+    <phone>444-444-4444</phone>
+    <studentId>ST11111</studentId>
+  </student>
+  <student>
+    <fullName>Fana1 Goitom</fullName>
+    <department>IT</department>
+    <phone>444-444-4444</phone>
+    <studentId>ST11112</studentId>
+  </student>
+</students>

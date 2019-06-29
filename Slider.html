@@ -3,6 +3,10 @@
     max-height:400px;
     min-height:400px;
 }
+#myCarousel img {
+  -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
+  filter: blur(1px);
+}
 </style>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
@@ -36,24 +40,27 @@
           indecatorHtml += '<li data-target="#myCarousel" data-slide-to="' + i + '" class="active"></li>';
           slidesHtml += `
           <div class="item active">
-            <img src="${items[i].Picture}" alt="Los Angeles" style="width:100%;">
+            <a href="https://tgari2018.sharepoint.com/sites/demo2/Lists/Slider/DispForm.aspx?ID=${items[i].ID}" ><img src="${items[i].Picture}" alt="Los Angeles" style="width:100%;"></a>
             <div class="carousel-caption">
               <h3>${items[i].Title}</h3>
               <p>${items[i].Description}</p>
+              <h4><a href="${items[i].DetailUrl}">Read more ...</a></h4>
             </div>
           </div>
           `;
+          
         }else{
           indecatorHtml += '<li data-target="#myCarousel" data-slide-to="' + i + '"></li>'
           slidesHtml += `
           <div class="item">
-            <img src="${items[i].Picture}" alt="Los Angeles" style="width:100%;">
+            <a href="https://tgari2018.sharepoint.com/sites/demo2/Lists/Slider/DispForm.aspx?ID=${items[i].ID}" ><img src="${items[i].Picture}" alt="Los Angeles" style="width:100%;"></a>
             <div class="carousel-caption">
               <h3>${items[i].Title}</h3>
               <p>${items[i].Description}</p>
+              <h4><a href="${items[i].DetailUrl}">Read more ...</a></h4>
             </div>
           </div>
-          `;
+          `;        
         }
       }
       indecatorHtml += '</ol>';
